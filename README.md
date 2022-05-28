@@ -14,6 +14,9 @@ Foram utilizados para os tópicos 1, 2 e 3 R Studio. Para o tópico 4 foi utiliz
 
 •Seleção em vetores
 
+
+
+
 ## Tópico 02:
 
 •Classes
@@ -21,6 +24,9 @@ Foram utilizados para os tópicos 1, 2 e 3 R Studio. Para o tópico 4 foi utiliz
 •Arquivos externos
 
 •Dataframes
+
+
+
 
 
 ## Tópico 03:
@@ -36,6 +42,9 @@ Foram utilizados para os tópicos 1, 2 e 3 R Studio. Para o tópico 4 foi utiliz
 •Eliminação de variáveis
 
 •Gravação de dataframes em arquivos
+
+
+
 
 
 ## Tópico 04:
