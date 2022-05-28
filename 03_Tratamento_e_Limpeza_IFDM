@@ -1,0 +1,119 @@
+# Leitura do arquivo de dados "IFDM_2018.csv"
+D <- read.csv("IFDM_2018.csv")
+
+# Análise preliminar
+# a) Checagem da estrutura do dataframe
+str(D)
+
+# b) Contagem de observações (municípios) por Unidade Federal
+table(D$UF) 
+
+# c) Contagem do total de valores ausentes
+sum(is.na(D))   # 188 (=94+91+3) NA's
+
+# ============================================================================ #
+# OPERAÇÕES DE TRATAMENTO
+# 1) Eliminação condicional de linhas (incluindo NA's)
+# a) Separe os dados originais em dois dataframes, um contendo
+# os registros completos (sem informações numéricas ausentes) e
+# outro apenas com os registros incompletos.
+
+# INSIRA SEU CÓDIGO AQUI
+
+#DRI DRC: datafame de requisitos incompleto/completo.
+# a vírgula diz respeito o todos os atributos.
+DRI <- D[!complete.cases(D),]
+DRC <- na.omit(D)
+
+# b) Remova todas as observações relativas ao Distrito Federal.
+# Neste caso, é conhecida a condição que define "quem vai sair".
+
+DRC <- DRC[!(DRC$UF== "DF"),]
+
+
+
+
+# ============================================================================ #
+# 2) Inserção de novas variáveis (colunas)
+# a) O índice geral é dado pela média dos três indicadores
+# avaliados (Emprego e Renda, Saúde e Educação). Calcule e anexe o
+# Índice Humano (IFDMH) aos dados, que prioriza a área de Saúde (peso 3)
+# e Educação (peso 4) sobre Emprego e Renda (peso 2). 
+
+# INSIRA SEU CÓDIGO AQUI
+
+DRC$IFDMH <- (DRC$IFDM_Emprego_e_Renda*2 + DRC$IFDM_Educacao*4 + DRC$IFDM_Saude*3)/9
+# b) Insira uma variável que represente o nível de desenvolvimento
+# das localidades, segundo a metodologia da FIRJAN:
+# - Categoria 'Baixo':    IFDM geral de 0 a 0,4;
+# - Categoria 'Regular':  IFDM de 0,4 a 0,6;
+# - Categoria 'Moderado': IFDM de 0,6 a 0,8;
+# - Categoria 'Alto':     IFDM maior que 0,8.
+
+# INSIRA SEU CÓDIGO AQUI
+CB <- DRC$IFDM_Geral<=0.4
+CR <- DRC$IFDM_Geral<=0.6
+CM <- DRC$IFDM_Geral<=0.8
+DRC$Nivel <- ifelse(CB, "Baixo",
+                ifelse(CR, "Regular",
+                     ifelse(CM, "Moderado", "Alto")))
+
+# Tabela de contagem dos níveis de desenvolvimento atribuídos
+# Resultado correto: Alto = 431; Baixo = 11; Moderado = 3739; Regular = 1289
+
+# INSIRA SEU CÓDIGO AQUI
+table(DRC$Nivel)
+
+# ============================================================================ #
+# 3) Alteração de nomes de variáveis
+# Renomeie a variável "UF" para "Estado".
+
+# INSIRA SEU CÓDIGO AQUI
+colnames(DRC)[colnames(DRC) == "UF"] <- "ESTADO"
+
+# ============================================================================ #
+# 4) Exclusão de variáveis
+# Elimine a informação de código (numérico) do município.
+
+# INSIRA SEU CÓDIGO AQUI
+DRC$Codigo_Municipio <- NULL
+
+
+
+# ============================================================================ #
+# 5) Atribuição condicional de valores
+# No dataframe de registros incompletos, substitua os valores ausentes
+# dos três indicadores por suas respectivas médias. Em seguida, atribua
+# 0 ao índice geral dos municípios do estado do Maranhão.
+
+# Cálculo das médias
+
+
+# INSIRA SEU CÓDIGO AQUI
+
+MER <- mean(DRI$IFDM_Emprego_e_Renda, na.rm=TRUE)
+ME <- mean(DRI$IFDM_Educacao, na.rm=TRUE)
+MS <- mean(DRI$IFDM_Saude,na.rm=TRUE)
+
+DRI$IFDM_Emprego_e_Renda[is.na(DRI$IFDM_Emprego_e_Renda)] <- MER
+DRI$IFDM_Educacao[is.na(DRI$IFDM_Educacao)] <- ME
+DRI$IFDM_Saude[is.na(DRI$IFDM_Saude)] <- MS
+
+# Atribuição dos valores médios para os indicadores ausentes
+
+# INSIRA SEU CÓDIGO AQUI
+DRI$IFDM_Geral[DRI$UF == "MA"] <- 0
+
+
+
+# Atribuição de valor = 0 para o índice geral dos municípios do Maranhão
+
+# INSIRA SEU CÓDIGO AQUI
+
+
+# ============================================================================ #
+# Gravação do conteúdo dos dois dataframes nos arquivos 
+# "IFDM_completo.csv" e "IFDM_ausentes.csv".
+
+write.csv(DRC,"IFDM_completo.csv",row.names = FALSE,fileEncoding = "UTF-8")
+write.csv(DRI,"IFDM_ausentes.csv",row.names = FALSE,fileEncoding = "UTF-8")

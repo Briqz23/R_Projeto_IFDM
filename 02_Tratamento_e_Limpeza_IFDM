@@ -1,0 +1,37 @@
+
+
+# Leitura do arquivo de dados "IFDM_2018.csv"
+# Dimensões: 5.565 observações de 7 variáveis
+D <- read.csv("IFDM_2018.csv")
+
+# 1) Checagem da estrutura do dataframe
+str(D)
+
+
+# 2) Conversão da informação da variável "UF": de texto
+# para variável qualitativa (factor) + checagem dos níveis
+# Escreva aqui o código!
+D$UF <- as.factor(D$UF)
+str(D)
+table(D$UF)
+
+
+
+# 3) Contagem das informações numéricas ausentes
+# Contagem individual (por variável)
+# Escreva aqui o código!
+
+sum(is.na(D$IFDM_Gera))
+sum(is.na(D$IFDM_Educacao))
+sum(is.na(D$IFDM_Emprego_e_Renda))
+sum(is.na(D$IFDM_Saude))
+
+
+# Contagem geral
+# Escreva aqui o código!
+sum(is.na(D))
+
+
+# 4) Existem municípios com o mesmo nome, em estados diferentes?
+# Escreva aqui o código!
+max(table(D$Municipio))
