@@ -4,6 +4,7 @@
 Esse projeto teve como objetivo analisar o IFDM (Índice FIRJAN de Desenvolvimento Municipal) e aplicar os conceitos de TRATAMENTO E LIMPEZA de dados. O projeto foi dividido em alguns tópicos, os quais vão ficando progressivamente mais complexos. 
 
 
+Foram utilizados para os tópicos 1, 2 e 3 R Studio. Para o tópico 4 foi utilizado o ZOHO.
 
 ## Tópico 01:
 
