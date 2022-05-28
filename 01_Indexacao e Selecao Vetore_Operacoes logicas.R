@@ -1,7 +1,3 @@
-# CM3044 - Encontro 03 - Operações lógicas e scripts
-# EDIÇÃO PRESENCIAL - 1o SEMESTRE DE 2022
-# EXERCÍCIOS "INSPIRADOS" NO MATERIAL TEÓRICO
-
 # 1) Criação de sequências
 # a) Sequência "básica", de 1 a 10
 s1 <- 1:10
@@ -120,5 +116,3 @@ print(V)
 V <- c(1,2,NA,NA,5:8)   # Vetor = [ 1 2 NA NA 5 6 7 8 ]
 V <- na.omit(V)
 print(V)
-
-# =============================== FIM DO SCRIPT ============================== #
